@@ -9,6 +9,8 @@ hooks:
   BeforeInstall:
     - location: scripts/stop.sh
       runas: root
+    - location: scripts/cleanup.sh
+      runas: root
 
   AfterInstall:
     - location: scripts/install.sh
