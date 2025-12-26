@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: user-api lambda
+Description: user-api lambda2
 
 Parameters:
   Environment:
@@ -19,6 +19,7 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::638892640336:policy/yoshida-test-policy-lambda-attach-to-VPC
 
   UserApiLambda:
     Type: AWS::Lambda::Function
@@ -32,6 +33,11 @@ Resources:
         S3Key: lambda/lambda-test2-dev.zip
       Timeout: 10
       MemorySize: 256
+      VpcConfig:
+        SecurityGroupIds:
+          - !ImportValue yoshida-test-cloudformat-AppSG
+        SubnetIds:
+          - !ImportValue privateSubnet1
 
 Outputs:
   LambdaArn:
