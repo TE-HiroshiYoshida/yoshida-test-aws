@@ -24,7 +24,7 @@ Resources:
   UserApiLambda:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: !Sub user-api-${Environment}
+      FunctionName: !Sub user-api2-${Environment}
       Runtime: python3.11
       Handler: app.lambda_handler
       Role: !GetAtt UserApiLambdaRole.Arn
