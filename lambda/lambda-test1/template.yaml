@@ -29,7 +29,7 @@ Resources:
       Handler: app.lambda_handler
       Role: !GetAtt UserApiLambdaRole.Arn
       Code:
-        S3Bucket: yoshida-test-autodeploy-buket
+        S3Bucket: yoshida-test-autodeploy-buket-oregon
         S3Key: lambda/lambda-test1-dev.zip
       Timeout: 10
       MemorySize: 256

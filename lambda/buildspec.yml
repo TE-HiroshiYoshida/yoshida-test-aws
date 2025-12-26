@@ -7,7 +7,7 @@ phases:
       - export LAMBDA_NAME1="lambda-test1"
       - export LAMBDA_NAME2="lambda-test2"
       - export ENVIRONMENT="dev"
-      - export BUCKET_NAME="yoshida-test-autodeploy-buket"
+      - export BUCKET_NAME="yoshida-test-autodeploy-buket-oregon"
       - export ZIP_FILE1="${LAMBDA_NAME1}-${ENVIRONMENT}.zip"
       - export ZIP_FILE2="${LAMBDA_NAME2}-${ENVIRONMENT}.zip"
 
