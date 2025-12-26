@@ -1,50 +1,22 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      python: 3.11
-
   build:
     commands:
-      - echo "Detect changes..."
-      - |
-        CHANGED=$(git diff --name-only HEAD~1 HEAD)
-
-        if 1 then
-          echo "Deploy user-api"
-
-          cd lambda-test1/
-
-          aws cloudformation package \
-            --template-file template.yaml \
-            --s3-bucket lambda-artifact-bucket-123456 \
-            --output-template-file packaged.yaml
-
-          aws cloudformation deploy \
-            --template-file packaged.yaml \
-            --stack-name user-api-stack \
-            --parameter-overrides Environment=dev \
-            --capabilities CAPABILITY_NAMED_IAM
-
-          cd ../
-        fi
-
-        if 1 then
-          echo "Deploy user-api"
-
-          cd lambda-test2/
-
-          aws cloudformation package \
-            --template-file template.yaml \
-            --s3-bucket lambda-artifact-bucket-123456 \
-            --output-template-file packaged.yaml
-
-          aws cloudformation deploy \
-            --template-file packaged.yaml \
-            --stack-name user-api-stack \
-            --parameter-overrides Environment=dev \
-            --capabilities CAPABILITY_NAMED_IAM
-
-          cd ../
-        fi
+      - echo "=== START DEPLOY ==="
+      - pwd
+      - ls -la
+      - echo "Deploy lambda-test1"
+      - cd lambda/lambda-test1
+      - aws cloudformation deploy \
+          --template-file template.yaml \
+          --stack-name lambda-test1-stack \
+          --parameter-overrides Environment=dev \
+          --capabilities CAPABILITY_NAMED_IAM
+      - cd ../lambda-test2
+      - echo "Deploy lambda-test2"
+      - aws cloudformation deploy \
+          --template-file template.yaml \
+          --stack-name lambda-test2-stack \
+          --parameter-overrides Environment=dev \
+          --capabilities CAPABILITY_NAMED_IAM
