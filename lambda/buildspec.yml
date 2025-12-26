@@ -1,20 +1,53 @@
 version: 0.2
 
 phases:
+  pre_build:
+    commands:
+      - echo "Setting variables"
+      - export LAMBDA_NAME1="lambda-test1"
+      - export LAMBDA_NAME2="lambda-test2"
+      - export ENVIRONMENT="dev"
+      - export BUCKET_NAME="yoshida-test-autodeploy-buket"
+      - export ZIP_FILE1="${LAMBDA_NAME1}-${ENVIRONMENT}.zip"
+      - export ZIP_FILE2="${LAMBDA_NAME2}-${ENVIRONMENT}.zip"
+
   build:
     commands:
       - echo "=== START DEPLOY ==="
       - pwd
       - ls -la
       - echo "Deploy lambda-test1"
-      - cd lambda/lambda-test1
+      - cd lambda/lambda-test1/src
+      - zip -r ../../${ZIP_FILE1} .
+      - cd ../../..
+      - cd lambda/lambda-test2/src
+      - zip -r ../../${ZIP_FILE2} .
+      - cd ../../..
+
+
+      - cd lambda
+      # S3 にアップロード
+      - echo "Uploading ZIP to S3..."
+      - aws s3 cp ${ZIP_FILE1} s3://${BUCKET_NAME}/lambada/${ZIP_FILE1}
+      # Deploy
+      - cd lambda-test1
       - |
           aws cloudformation deploy \
           --template-file template.yaml \
           --stack-name lambda-test1-stack \
           --parameter-overrides Environment=dev \
           --capabilities CAPABILITY_NAMED_IAM
-      - cd ../lambda-test2
+      - cd ../../
+
+
+
+      - cd lambda
+      # S3 にアップロード
+      - echo "Uploading ZIP to S3..."
+      - aws s3 cp ${ZIP_FILE2} s3://${BUCKET_NAME}/lambada/${ZIP_FILE2}
+
+      # Deploy
+      - cd lambda-test2
       - echo "Deploy lambda-test2"
       - |
           aws cloudformation deploy \
@@ -22,3 +55,5 @@ phases:
           --stack-name lambda-test2-stack \
           --parameter-overrides Environment=dev \
           --capabilities CAPABILITY_NAMED_IAM
+      - cd ../../
+
