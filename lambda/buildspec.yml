@@ -11,10 +11,10 @@ phases:
       - |
         CHANGED=$(git diff --name-only HEAD~1 HEAD)
 
-        if echo "$CHANGED" | grep '^lambda/lambda-test1/'; then
+        if echo "$CHANGED" | grep '^lambda-test1/'; then
           echo "Deploy user-api"
 
-          cd lambda/lambda-test1/
+          cd lambda-test1/
 
           aws cloudformation package \
             --template-file template.yaml \
@@ -27,13 +27,13 @@ phases:
             --parameter-overrides Environment=dev \
             --capabilities CAPABILITY_NAMED_IAM
 
-          cd ../../
+          cd ../
         fi
 
-        if echo "$CHANGED" | grep '^lambda/lambda-test2/'; then
+        if echo "$CHANGED" | grep '^lambda-test2/'; then
           echo "Deploy user-api"
 
-          cd lambda/lambda-test2/
+          cd lambda-test2/
 
           aws cloudformation package \
             --template-file template.yaml \
@@ -46,5 +46,5 @@ phases:
             --parameter-overrides Environment=dev \
             --capabilities CAPABILITY_NAMED_IAM
 
-          cd ../../
+          cd ../
         fi
