@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda only SAM template (no API Gateway)
+
+Parameters:
+  Environment:
+    Type: String
+    AllowedValues:
+      - dev
+      - prod
+
+Globals:
+  Function:
+    Runtime: python3.11
+    Timeout: 10
+    MemorySize: 256
+    VpcConfig:
+      SecurityGroupIds:
+        - !ImportValue yoshida-test-cloudformat-AppSG
+      SubnetIds:
+        - !ImportValue privateSubnet1
+        - !ImportValue privateSubnet2
+    Tags:
+      Environment: !Ref Environment
+
+Resources:
+  LambdaTest1:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub lambda-test1-${Environment}
+      CodeUri: src/lambda-test1/
+      Handler: app.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+
+  LambdaTest2:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub lambda-test2-${Environment}
+      CodeUri: src/lambda-test2/
+      Handler: app.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+
+Outputs:
+  LambdaTest1Arn:
+    Value: !GetAtt LambdaTest1.Arn
+
+  LambdaTest2Arn:
+    Value: !GetAtt LambdaTest2.Arn
