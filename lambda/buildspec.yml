@@ -8,6 +8,7 @@ phases:
       - ls -la
       - echo "Deploy lambda-test1"
       - cd lambda/lambda-test1
+      - |
       - aws cloudformation deploy \
           --template-file template.yaml \
           --stack-name lambda-test1-stack \
@@ -15,7 +16,8 @@ phases:
           --capabilities CAPABILITY_NAMED_IAM
       - cd ../lambda-test2
       - echo "Deploy lambda-test2"
-      - aws cloudformation deploy \
+      - |
+          - aws cloudformation deploy \
           --template-file template.yaml \
           --stack-name lambda-test2-stack \
           --parameter-overrides Environment=dev \
