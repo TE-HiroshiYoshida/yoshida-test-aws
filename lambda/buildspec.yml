@@ -36,7 +36,9 @@ phases:
           --template-file template.yaml \
           --stack-name lambda-test1-stack \
           --parameter-overrides Environment=dev \
-          --capabilities CAPABILITY_NAMED_IAM
+          --capabilities CAPABILITY_NAMED_IAM \
+          --s3-bucket ${BUCKET_NAME} \
+          --s3-prefix lambda-artifacts
       - cd ../../
 
 
@@ -54,6 +56,12 @@ phases:
           --template-file template.yaml \
           --stack-name lambda-test2-stack \
           --parameter-overrides Environment=dev \
-          --capabilities CAPABILITY_NAMED_IAM
+          --capabilities CAPABILITY_NAMED_IAM \
+          --s3-bucket ${BUCKET_NAME} \
+          --s3-prefix lambda-artifacts
       - cd ../../
 
+artifacts:
+  files:
+    - lambda/lambda-test1/template.yaml
+    - lambda/lambda-test2/template.yaml

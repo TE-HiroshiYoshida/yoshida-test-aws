@@ -27,7 +27,9 @@ Resources:
       Runtime: python3.11
       Handler: app.lambda_handler
       Role: !GetAtt UserApiLambdaRole.Arn
-      Code: src/
+      Code:
+        S3Bucket: yoshida-test-autodeploy-buket
+        S3Key: lambda-artifacts/lambda-test2-dev.zip
       Timeout: 10
       MemorySize: 256
 
