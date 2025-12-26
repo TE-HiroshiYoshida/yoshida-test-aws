@@ -28,7 +28,7 @@ phases:
       - cd lambda
       # S3 にアップロード
       - echo "Uploading ZIP to S3..."
-      - aws s3 cp ${ZIP_FILE1} s3://${BUCKET_NAME}/lambada/${ZIP_FILE1}
+      - aws s3 cp ${ZIP_FILE1} s3://${BUCKET_NAME}/lambda/${ZIP_FILE1}
       # Deploy
       - cd lambda-test1
       - |
@@ -38,7 +38,7 @@ phases:
           --parameter-overrides Environment=dev \
           --capabilities CAPABILITY_NAMED_IAM \
           --s3-bucket ${BUCKET_NAME} \
-          --s3-prefix lambda-artifacts
+          --s3-prefix lambda
       - cd ../../
 
 
@@ -46,7 +46,7 @@ phases:
       - cd lambda
       # S3 にアップロード
       - echo "Uploading ZIP to S3..."
-      - aws s3 cp ${ZIP_FILE2} s3://${BUCKET_NAME}/lambada/${ZIP_FILE2}
+      - aws s3 cp ${ZIP_FILE2} s3://${BUCKET_NAME}/lambda/${ZIP_FILE2}
 
       # Deploy
       - cd lambda-test2
@@ -58,7 +58,7 @@ phases:
           --parameter-overrides Environment=dev \
           --capabilities CAPABILITY_NAMED_IAM \
           --s3-bucket ${BUCKET_NAME} \
-          --s3-prefix lambda-artifacts
+          --s3-prefix lambda
       - cd ../../
 
 artifacts:

@@ -30,7 +30,7 @@ Resources:
       Role: !GetAtt UserApiLambdaRole.Arn
       Code:
         S3Bucket: yoshida-test-autodeploy-buket
-        S3Key: lambda-artifacts/lambda-test1-dev.zip
+        S3Key: lambda/lambda-test1-dev.zip
       Timeout: 10
       MemorySize: 256
       VpcConfig:
