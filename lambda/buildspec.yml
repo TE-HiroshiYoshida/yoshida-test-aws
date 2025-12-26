@@ -11,7 +11,7 @@ phases:
       - |
         CHANGED=$(git diff --name-only HEAD~1 HEAD)
 
-        if echo "$CHANGED" | grep '^lambda-test1/'; then
+        if 1 then
           echo "Deploy user-api"
 
           cd lambda-test1/
@@ -30,7 +30,7 @@ phases:
           cd ../
         fi
 
-        if echo "$CHANGED" | grep '^lambda-test2/'; then
+        if 1 then
           echo "Deploy user-api"
 
           cd lambda-test2/
