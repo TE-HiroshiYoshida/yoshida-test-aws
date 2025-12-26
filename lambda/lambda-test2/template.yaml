@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: user-api lambda
+
+Parameters:
+  Environment:
+    Type: String
+    AllowedValues: [dev, prod]
+
+Resources:
+  UserApiLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  UserApiLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub user-api-${Environment}
+      Runtime: python3.11
+      Handler: app.lambda_handler
+      Role: !GetAtt UserApiLambdaRole.Arn
+      Code: src/
+      Timeout: 10
+      MemorySize: 256
+
+Outputs:
+  LambdaArn:
+    Value: !GetAtt UserApiLambda.Arn
