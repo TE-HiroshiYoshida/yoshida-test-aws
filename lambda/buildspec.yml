@@ -9,8 +9,8 @@ phases:
 
   build:
     commands:
-      - sam build
+      - sam build -t lambda/template.yaml
 
   post_build:
     commands:
-      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset -t lambda/template.yaml
