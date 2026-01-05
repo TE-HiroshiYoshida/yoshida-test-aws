@@ -44,12 +44,12 @@ Resources:
 
 Outputs:
   LambdaTest1Arn:
-    Value: !Ref LambdaTest1
+    Value: !GetAtt LambdaTest1.Arn
     Export:
       Name: LambdaTest1
     
 
   LambdaTest2Arn:
-    Value: !Ref LambdaTest2
+    Value: !GetAtt LambdaTest1.Arn
     Export:
       Name: LambdaTest2
